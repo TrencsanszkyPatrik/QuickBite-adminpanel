@@ -8,7 +8,7 @@ namespace Quickbite_AdminPanel.Views
     public partial class AddAdminDialog : Window
     {
         private readonly ApiService _apiService;
-        private List<RestaurantBasicInfo> _restaurants = new();
+        private List<RestaurantListItem> _restaurants = new();
 
         public AddAdminDialog(ApiService apiService)
         {

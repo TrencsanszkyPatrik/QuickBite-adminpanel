@@ -51,4 +51,33 @@ namespace Quickbite_AdminPanel.Models
         public int TodayOrders { get; set; }
         public decimal TodayRevenue { get; set; }
     }
+
+    public class RestaurantListItem
+    {
+        public int Id { get; set; }
+        public string Name { get; set; } = string.Empty;
+        public string Email { get; set; } = string.Empty;
+        public string Phone { get; set; } = string.Empty;
+        public int AdminId { get; set; }
+        public string AdminName { get; set; } = string.Empty;
+        public bool IsActive { get; set; }
+        public DateTime CreatedAt { get; set; }
+    }
+
+    public class CreateRestaurantRequest
+    {
+        public string Name { get; set; } = string.Empty;
+        public string Email { get; set; } = string.Empty;
+        public string Phone { get; set; } = string.Empty;
+        public int AdminId { get; set; }
+    }
+
+    public class UpdateRestaurantRequest
+    {
+        public int Id { get; set; }
+        public string Name { get; set; } = string.Empty;
+        public string Email { get; set; } = string.Empty;
+        public string Phone { get; set; } = string.Empty;
+        public int AdminId { get; set; }
+    }
 }

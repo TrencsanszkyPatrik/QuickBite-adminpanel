@@ -40,6 +40,9 @@ namespace Quickbite_AdminPanel.Views
 
                 // Adminok listázása
                 await LoadAdminsAsync();
+
+                // Éttermek listázása
+                await LoadRestaurantsAsync();
             }
             catch (Exception ex)
             {
@@ -124,6 +127,97 @@ namespace Quickbite_AdminPanel.Views
                 var loginWindow = new LoginWindow();
                 loginWindow.Show();
                 this.Close();
+            }
+        }
+
+        // === ÉTTEREM KEZELÉS ===
+        private async Task LoadRestaurantsAsync()
+        {
+            try
+            {
+                var restaurants = await _apiService.GetRestaurantsAsync();
+                if (restaurants != null)
+                {
+                    RestaurantsDataGrid.ItemsSource = restaurants;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Hiba az éttermek betöltésekor: {ex.Message}", 
+                              "Hiba", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private async void AddRestaurantButton_Click(object sender, RoutedEventArgs e)
+        {
+            var addRestaurantDialog = new AddRestaurantDialog(_apiService);
+            if (addRestaurantDialog.ShowDialog() == true)
+            {
+                await LoadDataAsync();
+                MessageBox.Show("Étterem sikeresen hozzáadva!", 
+                              "Siker", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+        }
+
+        private async void DeleteRestaurantButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (sender is not Button button || button.Tag is not int restaurantId)
+                return;
+
+            var result = MessageBox.Show("Biztosan törölni szeretnéd ezt az éttermet?", 
+                                        "Megerősítés", 
+                                        MessageBoxButton.YesNo, 
+                                        MessageBoxImage.Question);
+
+            if (result == MessageBoxResult.Yes)
+            {
+                try
+                {
+                    var success = await _apiService.DeleteRestaurantAsync(restaurantId);
+                    if (success)
+                    {
+                        MessageBox.Show("Étterem sikeresen törölve!", 
+                                      "Siker", MessageBoxButton.OK, MessageBoxImage.Information);
+                        await LoadDataAsync();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Hiba történt a törlés során!", 
+                                      "Hiba", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Hiba: {ex.Message}", 
+                                  "Hiba", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+        }
+
+        private async void ToggleRestaurantStatusButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (sender is not Button button || button.Tag is not int restaurantId)
+                return;
+
+            try
+            {
+                var success = await _apiService.ToggleRestaurantStatusAsync(restaurantId);
+                if (success)
+                {
+                    MessageBox.Show("Étterem státusza sikeresen megváltoztatva!", 
+                                  "Siker", MessageBoxButton.OK, MessageBoxImage.Information);
+                    await LoadDataAsync();
+                }
+                else
+                {
+                    MessageBox.Show("Hiba történt a státusz módosítása során!", 
+                                  "Hiba", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Hiba: {ex.Message}", 
+                              "Hiba", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
     }

@@ -1,0 +1,149 @@
+<Window x:Class="Quickbite_AdminPanel.Views.AddRestaurantDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Új Étterem Hozzáadása" 
+        Width="450" 
+        Height="500"
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize">
+    
+    <Window.Resources>
+        <!-- QuickBite színvilág -->
+        <SolidColorBrush x:Key="PrimaryColor" Color="#3C3D37"/>
+        <SolidColorBrush x:Key="TextColor" Color="#181C14"/>
+        <SolidColorBrush x:Key="BorderColor" Color="#8B7A6B"/>
+        
+        <Style x:Key="ModernTextBox" TargetType="TextBox">
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="Padding" Value="10,8"/>
+            <Setter Property="BorderBrush" Value="{StaticResource BorderColor}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TextBox">
+                        <Border Background="White"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="6">
+                            <ScrollViewer x:Name="PART_ContentHost" 
+                                        Margin="{TemplateBinding Padding}"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
+    <Border Padding="25" Background="#F5EDE0">
+        <ScrollViewer VerticalScrollBarVisibility="Auto">
+            <StackPanel>
+                <TextBlock Text="Új Étterem Hozzáadása" 
+                          FontSize="20" 
+                          FontWeight="Bold"
+                          Foreground="{StaticResource TextColor}"
+                          Margin="0,0,0,20"/>
+
+                <!-- Étterem Név -->
+                <TextBlock Text="Étterem neve" 
+                          FontSize="12" 
+                          Foreground="{StaticResource TextColor}"
+                          Margin="0,0,0,5"/>
+                <TextBox x:Name="NameTextBox" 
+                        Style="{StaticResource ModernTextBox}"
+                        Margin="0,0,0,12"/>
+
+                <!-- Email -->
+                <TextBlock Text="Email cím" 
+                          FontSize="12" 
+                          Foreground="{StaticResource TextColor}"
+                          Margin="0,0,0,5"/>
+                <TextBox x:Name="EmailTextBox" 
+                        Style="{StaticResource ModernTextBox}"
+                        Margin="0,0,0,12"/>
+
+                <!-- Telefon -->
+                <TextBlock Text="Telefonszám" 
+                          FontSize="12" 
+                          Foreground="{StaticResource TextColor}"
+                          Margin="0,0,0,5"/>
+                <TextBox x:Name="PhoneTextBox" 
+                        Style="{StaticResource ModernTextBox}"
+                        Margin="0,0,0,12"/>
+
+                <!-- Admin kiválasztása -->
+                <TextBlock Text="Admin" 
+                          FontSize="12" 
+                          Foreground="{StaticResource TextColor}"
+                          Margin="0,0,0,5"/>
+                <ComboBox x:Name="AdminComboBox" 
+                         FontSize="13"
+                         Padding="12,8"
+                         Margin="0,0,0,15"
+                         DisplayMemberPath="Name"
+                         SelectedValuePath="Id"/>
+
+                <!-- Error message -->
+                <TextBlock x:Name="ErrorMessage" 
+                          Text="" 
+                          Foreground="Red"
+                          FontSize="11"
+                          TextWrapping="Wrap"
+                          Margin="0,0,0,12"
+                          Visibility="Collapsed"/>
+
+                <!-- Gombok -->
+                <Grid Margin="0,5,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Button Content="Mégse" 
+                           Grid.Column="0"
+                           Background="#ECDFCC"
+                           Foreground="{StaticResource TextColor}"
+                           FontSize="13"
+                           Padding="14,8"
+                           Margin="0,0,8,0"
+                           BorderThickness="0"
+                           Cursor="Hand"
+                           Click="CancelButton_Click">
+                        <Button.Template>
+                            <ControlTemplate TargetType="Button">
+                                <Border Background="{TemplateBinding Background}" 
+                                       CornerRadius="6"
+                                       Padding="{TemplateBinding Padding}">
+                                    <ContentPresenter HorizontalAlignment="Center" 
+                                                    VerticalAlignment="Center"/>
+                                </Border>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+
+                    <Button Content="Hozzáadás" 
+                           Grid.Column="1"
+                           Background="{StaticResource PrimaryColor}"
+                           Foreground="White"
+                           FontSize="13"
+                           FontWeight="SemiBold"
+                           Padding="14,8"
+                           Margin="8,0,0,0"
+                           BorderThickness="0"
+                           Cursor="Hand"
+                           Click="AddButton_Click">
+                        <Button.Template>
+                            <ControlTemplate TargetType="Button">
+                                <Border Background="{TemplateBinding Background}" 
+                                       CornerRadius="6"
+                                       Padding="{TemplateBinding Padding}">
+                                    <ContentPresenter HorizontalAlignment="Center" 
+                                                    VerticalAlignment="Center"/>
+                                </Border>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+                </Grid>
+            </StackPanel>
+        </ScrollViewer>
+    </Border>
+</Window>

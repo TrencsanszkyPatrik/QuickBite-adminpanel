@@ -33,7 +33,7 @@ namespace Quickbite_AdminPanel.Services
         {
             _httpClient = new HttpClient()
             {
-                BaseAddress = new Uri("http://localhost:5158/"),
+                BaseAddress = new Uri("https://quickbite-backend-production-6372.up.railway.app/"),
                 Timeout = TimeSpan.FromSeconds(30)
             };
         }
@@ -149,7 +149,7 @@ namespace Quickbite_AdminPanel.Services
         }
 
         // === RESTAURANTS ===
-        public async Task<List<RestaurantBasicInfo>?> GetRestaurantsAsync()
+        public async Task<List<RestaurantListItem>?> GetRestaurantsAsync()
         {
             try
             {
@@ -158,7 +158,7 @@ namespace Quickbite_AdminPanel.Services
                 if (response.IsSuccessStatusCode)
                 {
                     var json = await response.Content.ReadAsStringAsync();
-                    return JsonConvert.DeserializeObject<List<RestaurantBasicInfo>>(json);
+                    return JsonConvert.DeserializeObject<List<RestaurantListItem>>(json);
                 }
 
                 return null;
@@ -166,6 +166,71 @@ namespace Quickbite_AdminPanel.Services
             catch
             {
                 return null;
+            }
+        }
+
+        public async Task<RestaurantListItem?> CreateRestaurantAsync(CreateRestaurantRequest request)
+        {
+            try
+            {
+                var json = JsonConvert.SerializeObject(request);
+                var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+                var response = await _httpClient.PostAsync("api/super-admin/restaurants", content);
+                
+                if (response.IsSuccessStatusCode)
+                {
+                    var responseJson = await response.Content.ReadAsStringAsync();
+                    return JsonConvert.DeserializeObject<RestaurantListItem>(responseJson);
+                }
+
+                return null;
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        public async Task<bool> UpdateRestaurantAsync(UpdateRestaurantRequest request)
+        {
+            try
+            {
+                var json = JsonConvert.SerializeObject(request);
+                var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+                var response = await _httpClient.PutAsync($"api/super-admin/restaurants/{request.Id}", content);
+                return response.IsSuccessStatusCode;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        public async Task<bool> DeleteRestaurantAsync(int restaurantId)
+        {
+            try
+            {
+                var response = await _httpClient.DeleteAsync($"api/super-admin/restaurants/{restaurantId}");
+                return response.IsSuccessStatusCode;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        public async Task<bool> ToggleRestaurantStatusAsync(int restaurantId)
+        {
+            try
+            {
+                var response = await _httpClient.PostAsync($"api/super-admin/restaurants/{restaurantId}/toggle-status", null);
+                return response.IsSuccessStatusCode;
+            }
+            catch
+            {
+                return false;
             }
         }
     }
