@@ -33,9 +33,6 @@ namespace Quickbite_AdminPanel.Services
         {
             _httpClient = new HttpClient()
             {
-                // Uri needs a scheme (http/https) – without it you'll see
-                // "localhost scheme is not supported" exceptions when creating
-                // the Uri.  Was missing in original code.
                 BaseAddress = new Uri("http://localhost:5158/"),
                 Timeout = TimeSpan.FromSeconds(30)
             };
@@ -156,7 +153,8 @@ namespace Quickbite_AdminPanel.Services
         {
             try
             {
-                var response = await _httpClient.GetAsync("api/super-admin/restaurants");
+                // Use public Restaurants endpoint to get full restaurant entities
+                var response = await _httpClient.GetAsync("api/Restaurants");
                 
                 if (response.IsSuccessStatusCode)
                 {
