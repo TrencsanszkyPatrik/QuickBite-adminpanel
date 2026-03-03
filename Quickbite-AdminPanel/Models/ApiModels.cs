@@ -1,3 +1,5 @@
+using Newtonsoft.Json;
+
 namespace Quickbite_AdminPanel.Models
 {
     using Newtonsoft.Json;
@@ -58,18 +60,23 @@ namespace Quickbite_AdminPanel.Models
     {
         public int Id { get; set; }
         public string Name { get; set; } = string.Empty;
+        [JsonProperty("email")]
         public string Email { get; set; } = string.Empty;
+
+        [JsonProperty("phonenumber")]
         public string Phone { get; set; } = string.Empty;
         public int AdminId { get; set; }
         public string AdminName { get; set; } = string.Empty;
-        public bool IsActive { get; set; }
         public DateTime CreatedAt { get; set; }
     }
 
     public class CreateRestaurantRequest
     {
         public string Name { get; set; } = string.Empty;
+        [JsonProperty("email")]
         public string Email { get; set; } = string.Empty;
+
+        [JsonProperty("phone_number")]
         public string Phone { get; set; } = string.Empty;
         public int AdminId { get; set; }
     }
@@ -78,7 +85,10 @@ namespace Quickbite_AdminPanel.Models
     {
         public int Id { get; set; }
         public string Name { get; set; } = string.Empty;
+        [JsonProperty("email")]
         public string Email { get; set; } = string.Empty;
+
+        [JsonProperty("phone_number")]
         public string Phone { get; set; } = string.Empty;
         public int AdminId { get; set; }
     }

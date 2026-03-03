@@ -2,7 +2,8 @@
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>net10.0-windows</TargetFramework>
+    <!-- switched to .NET 8.0, previously net10.0-windows -->
+    <TargetFramework>net8.0-windows</TargetFramework>
     <RootNamespace>Quickbite_AdminPanel</RootNamespace>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>

@@ -389,18 +389,10 @@
                                          FontSize="13">
                                     <DataGrid.Columns>
                                         <DataGridTextColumn Header="Étterem Név" Binding="{Binding Name}" Width="180"/>
-                                        <DataGridTextColumn Header="Email" Binding="{Binding Email}" Width="200"/>
+                                        <!-- Email removed: restaurant entity doesn't include email -->
                                         <DataGridTextColumn Header="Telefon" Binding="{Binding Phone}" Width="130"/>
                                         <DataGridTextColumn Header="Admin" Binding="{Binding AdminName}" Width="150"/>
-                                        <DataGridTemplateColumn Header="Státusz" Width="100">
-                                            <DataGridTemplateColumn.CellTemplate>
-                                                <DataTemplate>
-                                                    <TextBlock Text="{Binding IsActive, StringFormat='{}{0:Aktív;Inaktív}'}" 
-                                                              FontWeight="SemiBold"
-                                                              Foreground="{Binding IsActive, Converter={StaticResource BoolToColorConverter}}"/>
-                                                </DataTemplate>
-                                            </DataGridTemplateColumn.CellTemplate>
-                                        </DataGridTemplateColumn>
+                                        <!-- Status column removed as it's not needed -->
                                         <DataGridTextColumn Header="Létrehozva" Binding="{Binding CreatedAt, StringFormat='{}{0:yyyy-MM-dd}'}" Width="110"/>
                                         <DataGridTemplateColumn Header="Műveletek" Width="*">
                                             <DataGridTemplateColumn.CellTemplate>
