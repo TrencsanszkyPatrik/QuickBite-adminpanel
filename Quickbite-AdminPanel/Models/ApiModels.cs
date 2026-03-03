@@ -1,5 +1,7 @@
 namespace Quickbite_AdminPanel.Models
 {
+    using Newtonsoft.Json;
+
     public class AdminLoginRequest
     {
         public string Email { get; set; } = string.Empty;
@@ -79,5 +81,52 @@ namespace Quickbite_AdminPanel.Models
         public string Email { get; set; } = string.Empty;
         public string Phone { get; set; } = string.Empty;
         public int AdminId { get; set; }
+    }
+
+    public class RestaurantAdminRestaurantItem
+    {
+        public int id { get; set; }
+        public string name { get; set; } = string.Empty;
+        public string address { get; set; } = string.Empty;
+        public string city { get; set; } = string.Empty;
+        public string description { get; set; } = string.Empty;
+
+        [JsonProperty("description_long")]
+        public string descriptionLong { get; set; } = string.Empty;
+
+        public int discount { get; set; }
+
+        [JsonProperty("free_delivery")]
+        public bool freeDelivery { get; set; }
+
+        [JsonProperty("accept_cards")]
+        public bool acceptCards { get; set; }
+
+        [JsonProperty("cuisine_id")]
+        public int cuisineId { get; set; }
+
+        [JsonProperty("opening_time")]
+        public string openingTime { get; set; } = string.Empty;
+
+        [JsonProperty("closing_time")]
+        public string closingTime { get; set; } = string.Empty;
+
+        public string phonenumber { get; set; } = string.Empty;
+    }
+
+    public class RestaurantAdminUpdateRequest
+    {
+        public string Name { get; set; } = string.Empty;
+        public string Address { get; set; } = string.Empty;
+        public string City { get; set; } = string.Empty;
+        public string Description { get; set; } = string.Empty;
+        public string DescriptionLong { get; set; } = string.Empty;
+        public int Discount { get; set; }
+        public bool FreeDelivery { get; set; }
+        public bool AcceptCards { get; set; }
+        public int CuisineId { get; set; }
+        public string OpeningTime { get; set; } = string.Empty;
+        public string ClosingTime { get; set; } = string.Empty;
+        public string PhoneNumber { get; set; } = string.Empty;
     }
 }

@@ -49,19 +49,25 @@ namespace Quickbite_AdminPanel.Views
 
                 if (result != null)
                 {
-                    // Ellenőrzés: csak super_admin jelentkezhet be
-                    if (result.Role != "super_admin")
+                    if (result.Role == "super_admin")
                     {
-                        ShowError("Csak Super Admin jogosultsággal jelentkezhetsz be!");
-                        LoginButton.IsEnabled = true;
-                        LoadingMessage.Visibility = Visibility.Collapsed;
+                        var superAdminWindow = new SuperAdminWindow(result, _apiService);
+                        superAdminWindow.Show();
+                        this.Close();
                         return;
                     }
 
-                    // Sikeres bejelentkezés -> Super Admin ablak
-                    var superAdminWindow = new SuperAdminWindow(result, _apiService);
-                    superAdminWindow.Show();
-                    this.Close();
+                    if (result.Role == "restaurant_admin")
+                    {
+                        var restaurantAdminWindow = new RestaurantAdminWindow(result, _apiService);
+                        restaurantAdminWindow.Show();
+                        this.Close();
+                        return;
+                    }
+
+                    ShowError("Ehhez a felülethez nincs jogosultságod.");
+                    LoginButton.IsEnabled = true;
+                    LoadingMessage.Visibility = Visibility.Collapsed;
                 }
                 else
                 {

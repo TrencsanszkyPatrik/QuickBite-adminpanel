@@ -33,7 +33,7 @@ namespace Quickbite_AdminPanel.Services
         {
             _httpClient = new HttpClient()
             {
-                BaseAddress = new Uri("https://quickbite-backend-production-6372.up.railway.app/"),
+                BaseAddress = new Uri("http://localhost:5158/"),
                 Timeout = TimeSpan.FromSeconds(30)
             };
         }
@@ -226,6 +226,44 @@ namespace Quickbite_AdminPanel.Services
             try
             {
                 var response = await _httpClient.PostAsync($"api/super-admin/restaurants/{restaurantId}/toggle-status", null);
+                return response.IsSuccessStatusCode;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        // === RESTAURANT ADMIN ===
+        public async Task<List<RestaurantAdminRestaurantItem>?> GetMyRestaurantsAsync()
+        {
+            try
+            {
+                var response = await _httpClient.GetAsync("api/restaurant-admin/restaurants");
+
+                if (response.IsSuccessStatusCode)
+                {
+                    var json = await response.Content.ReadAsStringAsync();
+                    return JsonConvert.DeserializeObject<List<RestaurantAdminRestaurantItem>>(json);
+                }
+
+                var errorContent = await response.Content.ReadAsStringAsync();
+                throw new Exception($"API hiba ({(int)response.StatusCode}): {errorContent}");
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Saját éttermek lekérése sikertelen: {ex.Message}");
+            }
+        }
+
+        public async Task<bool> UpdateMyRestaurantAsync(int restaurantId, RestaurantAdminUpdateRequest request)
+        {
+            try
+            {
+                var json = JsonConvert.SerializeObject(request);
+                var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+                var response = await _httpClient.PutAsync($"api/restaurant-admin/restaurants/{restaurantId}", content);
                 return response.IsSuccessStatusCode;
             }
             catch

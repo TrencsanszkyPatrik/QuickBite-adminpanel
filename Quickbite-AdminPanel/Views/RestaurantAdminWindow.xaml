@@ -1,0 +1,167 @@
+<Window x:Class="Quickbite_AdminPanel.Views.RestaurantAdminWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="QuickBite - Étterem Admin" 
+        WindowState="Maximized"
+        WindowStyle="None"
+        ResizeMode="NoResize"
+        Loaded="Window_Loaded">
+
+    <Window.Resources>
+        <SolidColorBrush x:Key="PrimaryColor" Color="#3C3D37"/>
+        <SolidColorBrush x:Key="SecondaryColor" Color="#697565"/>
+        <SolidColorBrush x:Key="BackgroundColor" Color="#F5EDE0"/>
+        <SolidColorBrush x:Key="CardBackground" Color="White"/>
+        <SolidColorBrush x:Key="TextColor" Color="#181C14"/>
+        <SolidColorBrush x:Key="TextSecondary" Color="#697565"/>
+        <SolidColorBrush x:Key="BorderColor" Color="#8B7A6B"/>
+
+        <Style x:Key="PrimaryButton" TargetType="Button">
+            <Setter Property="Background" Value="{StaticResource PrimaryColor}"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Padding" Value="16,10"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}"
+                                CornerRadius="6"
+                                Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center"
+                                            VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="{StaticResource SecondaryColor}"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="InputTextBox" TargetType="TextBox">
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="Padding" Value="10,8"/>
+            <Setter Property="BorderBrush" Value="{StaticResource BorderColor}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TextBox">
+                        <Border Background="White"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="6">
+                            <ScrollViewer x:Name="PART_ContentHost"
+                                        Margin="{TemplateBinding Padding}"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
+    <Grid Background="{StaticResource BackgroundColor}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="70"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Border Grid.Row="0" Background="{StaticResource CardBackground}">
+            <Grid Margin="30,0">
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                    <TextBlock Text="🍕 QuickBite" FontSize="20" FontWeight="Bold" Foreground="{StaticResource PrimaryColor}"/>
+                    <TextBlock Text="Étterem Admin Panel" FontSize="15" Foreground="{StaticResource TextSecondary}" Margin="15,0,0,0"/>
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
+                    <TextBlock x:Name="UserNameText" FontSize="13" FontWeight="Medium" Foreground="{StaticResource TextColor}" Margin="0,0,15,0"/>
+                    <Button Content="Kijelentkezés" Style="{StaticResource PrimaryButton}" Padding="12,7" Click="LogoutButton_Click"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+            <StackPanel Margin="30,25">
+                <TextBlock Text="Saját étterem adatai" FontSize="24" FontWeight="Bold" Foreground="{StaticResource TextColor}" Margin="0,0,0,18"/>
+
+                <Border Background="{StaticResource CardBackground}" CornerRadius="12" Padding="20">
+                    <Border.Effect>
+                        <DropShadowEffect Color="#000000" Opacity="0.08" BlurRadius="20" ShadowDepth="0"/>
+                    </Border.Effect>
+
+                    <StackPanel>
+                        <TextBlock Text="Választott étterem" FontWeight="SemiBold" Margin="0,0,0,6"/>
+                        <ComboBox x:Name="RestaurantSelector" DisplayMemberPath="name" SelectedValuePath="id" SelectionChanged="RestaurantSelector_SelectionChanged" Margin="0,0,0,20" MinHeight="34"/>
+
+                        <Grid Margin="0,0,0,10">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <StackPanel Margin="0,0,8,0">
+                                <TextBlock Text="Név" Margin="0,0,0,6"/>
+                                <TextBox x:Name="NameTextBox" Style="{StaticResource InputTextBox}"/>
+                            </StackPanel>
+
+                            <StackPanel Grid.Column="1" Margin="8,0,0,0">
+                                <TextBlock Text="Város" Margin="0,0,0,6"/>
+                                <TextBox x:Name="CityTextBox" Style="{StaticResource InputTextBox}"/>
+                            </StackPanel>
+                        </Grid>
+
+                        <TextBlock Text="Cím" Margin="0,0,0,6"/>
+                        <TextBox x:Name="AddressTextBox" Style="{StaticResource InputTextBox}" Margin="0,0,0,10"/>
+
+                        <TextBlock Text="Telefonszám" Margin="0,0,0,6"/>
+                        <TextBox x:Name="PhoneTextBox" Style="{StaticResource InputTextBox}" Margin="0,0,0,10"/>
+
+                        <Grid Margin="0,0,0,10">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <StackPanel Margin="0,0,8,0">
+                                <TextBlock Text="Nyitás (HH:mm)" Margin="0,0,0,6"/>
+                                <TextBox x:Name="OpeningTimeTextBox" Style="{StaticResource InputTextBox}"/>
+                            </StackPanel>
+
+                            <StackPanel Grid.Column="1" Margin="8,0,8,0">
+                                <TextBlock Text="Zárás (HH:mm)" Margin="0,0,0,6"/>
+                                <TextBox x:Name="ClosingTimeTextBox" Style="{StaticResource InputTextBox}"/>
+                            </StackPanel>
+
+                            <StackPanel Grid.Column="2" Margin="8,0,0,0">
+                                <TextBlock Text="Kedvezmény (%)" Margin="0,0,0,6"/>
+                                <TextBox x:Name="DiscountTextBox" Style="{StaticResource InputTextBox}"/>
+                            </StackPanel>
+                        </Grid>
+
+                        <WrapPanel Margin="0,0,0,10">
+                            <CheckBox x:Name="FreeDeliveryCheckBox" Content="Ingyenes szállítás" Margin="0,0,25,0"/>
+                            <CheckBox x:Name="AcceptCardsCheckBox" Content="Kártyaelfogadás"/>
+                        </WrapPanel>
+
+                        <TextBlock Text="Rövid leírás" Margin="0,0,0,6"/>
+                        <TextBox x:Name="DescriptionTextBox" Style="{StaticResource InputTextBox}" TextWrapping="Wrap" AcceptsReturn="True" Height="70" Margin="0,0,0,10"/>
+
+                        <TextBlock Text="Hosszú leírás" Margin="0,0,0,6"/>
+                        <TextBox x:Name="DescriptionLongTextBox" Style="{StaticResource InputTextBox}" TextWrapping="Wrap" AcceptsReturn="True" Height="120" Margin="0,0,0,16"/>
+
+                        <TextBlock x:Name="StatusText" Foreground="Red" FontSize="12" Margin="0,0,0,8" Visibility="Collapsed"/>
+
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                            <Button x:Name="SaveButton" Content="Mentés" Style="{StaticResource PrimaryButton}" Click="SaveButton_Click"/>
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</Window>
