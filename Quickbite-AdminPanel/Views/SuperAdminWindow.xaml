@@ -420,6 +420,71 @@
                             </Border>
                         </StackPanel>
                     </TabItem>
+
+                    <!-- Tagok Kezelés Tab -->
+                    <TabItem Header="Tagok Kezelése">
+                        <StackPanel Margin="0,15,0,0">
+                            <Grid Margin="0,0,0,15">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+
+                                <TextBlock Text="Tagok (Felhasználók)" 
+                                          FontSize="20" 
+                                          FontWeight="Bold"
+                                          Foreground="{StaticResource TextColor}"
+                                          VerticalAlignment="Center"/>
+
+                                <TextBlock Grid.Column="1"
+                                          Text=""
+                                          FontSize="14"
+                                          Foreground="{StaticResource TextSecondary}"
+                                          VerticalAlignment="Center"/>
+                            </Grid>
+
+                            <!-- Users List -->
+                            <Border Background="{StaticResource CardBackground}"
+                                   CornerRadius="12"
+                                   Padding="0">
+                                <Border.Effect>
+                                    <DropShadowEffect Color="#000000" Opacity="0.08" 
+                                                    BlurRadius="20" ShadowDepth="0"/>
+                                </Border.Effect>
+
+                                <DataGrid x:Name="UsersDataGrid" 
+                                         AutoGenerateColumns="False"
+                                         IsReadOnly="True"
+                                         HeadersVisibility="Column"
+                                         GridLinesVisibility="None"
+                                         Background="Transparent"
+                                         BorderThickness="0"
+                                         RowHeight="55"
+                                         CanUserResizeRows="False"
+                                         FontSize="13">
+                                    <DataGrid.Columns>
+                                        <DataGridTextColumn Header="Név" Binding="{Binding Name}" Width="180"/>
+                                        <DataGridTextColumn Header="Email" Binding="{Binding Email}" Width="220"/>
+                                        <DataGridTextColumn Header="Szerepkör" Binding="{Binding Role}" Width="130"/>
+                                        <DataGridTextColumn Header="Rendelések száma" Binding="{Binding OrderCount}" Width="130"/>
+                                        <DataGridTextColumn Header="Regisztrációs dátum" Binding="{Binding CreatedAt, StringFormat='{}{0:yyyy-MM-dd}'}" Width="140"/>
+                                        <DataGridTemplateColumn Header="Műveletek" Width="*">
+                                            <DataGridTemplateColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <Button Content="🗑️ Törlés" 
+                                                           Style="{StaticResource DangerButton}"
+                                                           Padding="12,6"
+                                                           FontSize="12"
+                                                           Click="DeleteUserButton_Click"
+                                                           Tag="{Binding Id}"/>
+                                                </DataTemplate>
+                                            </DataGridTemplateColumn.CellTemplate>
+                                        </DataGridTemplateColumn>
+                                    </DataGrid.Columns>
+                                </DataGrid>
+                            </Border>
+                        </StackPanel>
+                    </TabItem>
                 </TabControl>
 
             </StackPanel>

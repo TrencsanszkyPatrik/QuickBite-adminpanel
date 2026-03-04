@@ -43,6 +43,9 @@ namespace Quickbite_AdminPanel.Views
 
                 // Éttermek listázása
                 await LoadRestaurantsAsync();
+
+                // Felhasználók listázása
+                await LoadUsersAsync();
             }
             catch (Exception ex)
             {
@@ -218,6 +221,59 @@ namespace Quickbite_AdminPanel.Views
             {
                 MessageBox.Show($"Hiba: {ex.Message}", 
                               "Hiba", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        // === TAGOK KEZELÉS ===
+        private async Task LoadUsersAsync()
+        {
+            try
+            {
+                var users = await _apiService.GetUsersAsync();
+                if (users != null)
+                {
+                    UsersDataGrid.ItemsSource = users;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Hiba a tagok betöltésekor: {ex.Message}", 
+                              "Hiba", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private async void DeleteUserButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (sender is not Button button || button.Tag is not int userId)
+                return;
+
+            var result = MessageBox.Show("Biztosan törölni szeretnéd ezt a tagot?", 
+                                        "Megerősítés", 
+                                        MessageBoxButton.YesNo, 
+                                        MessageBoxImage.Question);
+
+            if (result == MessageBoxResult.Yes)
+            {
+                try
+                {
+                    var success = await _apiService.DeleteUserAsync(userId);
+                    if (success)
+                    {
+                        MessageBox.Show("Tag sikeresen törölve!", 
+                                      "Siker", MessageBoxButton.OK, MessageBoxImage.Information);
+                        await LoadDataAsync();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Hiba történt a törlés során!", 
+                                      "Hiba", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Hiba: {ex.Message}", 
+                                  "Hiba", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
             }
         }
     }

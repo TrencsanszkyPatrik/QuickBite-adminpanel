@@ -272,5 +272,39 @@ namespace Quickbite_AdminPanel.Services
                 return false;
             }
         }
+
+        // === USER MANAGEMENT ===
+        public async Task<List<UserListItem>?> GetUsersAsync()
+        {
+            try
+            {
+                var response = await _httpClient.GetAsync("api/super-admin/users");
+                
+                if (response.IsSuccessStatusCode)
+                {
+                    var json = await response.Content.ReadAsStringAsync();
+                    return JsonConvert.DeserializeObject<List<UserListItem>>(json);
+                }
+
+                return null;
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        public async Task<bool> DeleteUserAsync(int userId)
+        {
+            try
+            {
+                var response = await _httpClient.DeleteAsync($"api/super-admin/users/{userId}");
+                return response.IsSuccessStatusCode;
+            }
+            catch
+            {
+                return false;
+            }
+        }
     }
 }
