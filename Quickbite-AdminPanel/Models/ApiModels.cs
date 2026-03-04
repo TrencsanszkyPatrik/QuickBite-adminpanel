@@ -60,12 +60,9 @@ namespace Quickbite_AdminPanel.Models
     {
         public int Id { get; set; }
         public string Name { get; set; } = string.Empty;
-        [JsonProperty("email")]
-        public string Email { get; set; } = string.Empty;
-
-        [JsonProperty("phonenumber")]
+        [JsonProperty("phone")]
         public string Phone { get; set; } = string.Empty;
-        public int AdminId { get; set; }
+        [JsonProperty("adminName")]
         public string AdminName { get; set; } = string.Empty;
         public DateTime CreatedAt { get; set; }
     }

@@ -153,8 +153,8 @@ namespace Quickbite_AdminPanel.Services
         {
             try
             {
-                // Use public Restaurants endpoint to get full restaurant entities
-                var response = await _httpClient.GetAsync("api/Restaurants");
+                // Use super-admin endpoint to get restaurants with admin names
+                var response = await _httpClient.GetAsync("api/super-admin/restaurants-with-admins");
                 
                 if (response.IsSuccessStatusCode)
                 {

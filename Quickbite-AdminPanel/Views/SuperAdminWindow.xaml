@@ -389,29 +389,18 @@
                                          FontSize="13">
                                     <DataGrid.Columns>
                                         <DataGridTextColumn Header="Étterem Név" Binding="{Binding Name}" Width="180"/>
-                                        <!-- Email removed: restaurant entity doesn't include email -->
                                         <DataGridTextColumn Header="Telefon" Binding="{Binding Phone}" Width="130"/>
                                         <DataGridTextColumn Header="Admin" Binding="{Binding AdminName}" Width="150"/>
-                                        <!-- Status column removed as it's not needed -->
                                         <DataGridTextColumn Header="Létrehozva" Binding="{Binding CreatedAt, StringFormat='{}{0:yyyy-MM-dd}'}" Width="110"/>
                                         <DataGridTemplateColumn Header="Műveletek" Width="*">
                                             <DataGridTemplateColumn.CellTemplate>
                                                 <DataTemplate>
-                                                    <StackPanel Orientation="Horizontal">
-                                                        <Button Content="🔄 Státusz" 
-                                                               Style="{StaticResource PrimaryButton}"
-                                                               Padding="10,6"
-                                                               FontSize="11"
-                                                               Click="ToggleRestaurantStatusButton_Click"
-                                                               Tag="{Binding Id}"
-                                                               Margin="0,0,5,0"/>
-                                                        <Button Content="🗑️ Törlés" 
-                                                               Style="{StaticResource DangerButton}"
-                                                               Padding="10,6"
-                                                               FontSize="11"
-                                                               Click="DeleteRestaurantButton_Click"
-                                                               Tag="{Binding Id}"/>
-                                                    </StackPanel>
+                                                    <Button Content="🗑️ Törlés" 
+                                                           Style="{StaticResource DangerButton}"
+                                                           Padding="12,6"
+                                                           FontSize="11"
+                                                           Click="DeleteRestaurantButton_Click"
+                                                           Tag="{Binding Id}"/>
                                                 </DataTemplate>
                                             </DataGridTemplateColumn.CellTemplate>
                                         </DataGridTemplateColumn>

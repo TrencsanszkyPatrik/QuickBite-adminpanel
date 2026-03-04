@@ -197,32 +197,7 @@ namespace Quickbite_AdminPanel.Views
             }
         }
 
-        private async void ToggleRestaurantStatusButton_Click(object sender, RoutedEventArgs e)
-        {
-            if (sender is not Button button || button.Tag is not int restaurantId)
-                return;
 
-            try
-            {
-                var success = await _apiService.ToggleRestaurantStatusAsync(restaurantId);
-                if (success)
-                {
-                    MessageBox.Show("Étterem státusza sikeresen megváltoztatva!", 
-                                  "Siker", MessageBoxButton.OK, MessageBoxImage.Information);
-                    await LoadDataAsync();
-                }
-                else
-                {
-                    MessageBox.Show("Hiba történt a státusz módosítása során!", 
-                                  "Hiba", MessageBoxButton.OK, MessageBoxImage.Error);
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Hiba: {ex.Message}", 
-                              "Hiba", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-        }
 
         // === TAGOK KEZELÉS ===
         private async Task LoadUsersAsync()
