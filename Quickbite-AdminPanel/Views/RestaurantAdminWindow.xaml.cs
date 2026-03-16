@@ -114,6 +114,11 @@ namespace Quickbite_AdminPanel.Views
         {
             _selectedMenuItem = MenuItemsGrid.SelectedItem as RestaurantAdminMenuItem;
             BindSelectedMenuItemToForm();
+
+            if (_selectedMenuItem != null)
+            {
+                MenuEditorExpander.IsExpanded = true;
+            }
         }
 
         private async void AddMenuItemButton_Click(object sender, RoutedEventArgs e)
@@ -236,6 +241,7 @@ namespace Quickbite_AdminPanel.Views
         private void NewMenuItemButton_Click(object sender, RoutedEventArgs e)
         {
             ClearMenuItemForm();
+            MenuEditorExpander.IsExpanded = true;
             ShowMenuStatus("Új étlap tétel rögzítéséhez töltsd ki a mezőket.", false);
         }
 

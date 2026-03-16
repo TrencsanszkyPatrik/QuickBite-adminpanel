@@ -256,105 +256,124 @@
 
                             <TabItem Header="Étlap">
                                 <StackPanel Margin="12">
-                                    <Grid Margin="0,0,0,10">
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="*"/>
-                                            <ColumnDefinition Width="*"/>
-                                        </Grid.ColumnDefinitions>
-
-                                        <StackPanel Margin="0,0,8,0">
-                                            <TextBlock Text="Név" Margin="0,0,0,6"/>
-                                            <TextBox x:Name="MenuNameTextBox" Style="{StaticResource InputTextBox}"/>
-                                        </StackPanel>
-
-                                        <StackPanel Grid.Column="1" Margin="8,0,0,0">
-                                            <TextBlock Text="Kategória" Margin="0,0,0,6"/>
-                                            <TextBox x:Name="MenuCategoryTextBox" Style="{StaticResource InputTextBox}"/>
-                                        </StackPanel>
-                                    </Grid>
-
-                                    <Grid Margin="0,0,0,10">
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="*"/>
-                                            <ColumnDefinition Width="220"/>
-                                            <ColumnDefinition Width="160"/>
-                                        </Grid.ColumnDefinitions>
-
-                                        <StackPanel Margin="0,0,8,0">
-                                            <TextBlock Text="Leírás" Margin="0,0,0,6"/>
-                                            <TextBox x:Name="MenuDescriptionTextBox" Style="{StaticResource InputTextBox}"/>
-                                        </StackPanel>
-
-                                        <StackPanel Grid.Column="1" Margin="8,0,8,0">
-                                            <TextBlock Text="Ár" Margin="0,0,0,6"/>
-                                            <TextBox x:Name="MenuPriceTextBox" Style="{StaticResource InputTextBox}"/>
-                                        </StackPanel>
-
-                                        <StackPanel Grid.Column="2" Margin="8,0,0,0" VerticalAlignment="Bottom">
-                                            <CheckBox x:Name="MenuIsAvailableCheckBox" Content="Elérhető" IsChecked="True"/>
-                                        </StackPanel>
-                                    </Grid>
-
-                                    <WrapPanel Margin="0,0,0,12">
-                                        <Button Content="Új" Style="{StaticResource PrimaryButton}" Padding="12,7" Margin="0,0,8,0" Click="NewMenuItemButton_Click"/>
-                                        <Button x:Name="AddMenuItemButton" Content="Hozzáadás" Style="{StaticResource PrimaryButton}" Padding="12,7" Margin="0,0,8,0" Click="AddMenuItemButton_Click"/>
-                                        <Button x:Name="UpdateMenuItemButton" Content="Módosítás" Style="{StaticResource PrimaryButton}" Padding="12,7" Margin="0,0,8,0" Click="UpdateMenuItemButton_Click" IsEnabled="False"/>
-                                        <Button x:Name="DeleteMenuItemButton" Content="Törlés" Style="{StaticResource PrimaryButton}" Padding="12,7" Margin="0,0,8,0" Click="DeleteMenuItemButton_Click" IsEnabled="False"/>
-                                        <Button Content="Frissítés" Style="{StaticResource PrimaryButton}" Padding="12,7" Click="RefreshMenuButton_Click"/>
-                                    </WrapPanel>
-
-                                    <Grid Margin="0,0,0,12">
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="*"/>
-                                            <ColumnDefinition Width="Auto"/>
-                                            <ColumnDefinition Width="Auto"/>
-                                        </Grid.ColumnDefinitions>
-
-                                        <TextBox x:Name="MenuSelectedImagePathTextBox"
-                                                 Style="{StaticResource InputTextBox}"
-                                                 IsReadOnly="True"
-                                                 VerticalAlignment="Center"/>
-
-                                        <Button Grid.Column="1"
-                                                Content="Tallózás"
-                                                Style="{StaticResource PrimaryButton}"
-                                                Padding="12,7"
-                                                Margin="8,0,8,0"
-                                                Click="BrowseMenuImageButton_Click"/>
-
-                                        <Button Grid.Column="2"
-                                                x:Name="UploadMenuImageButton"
-                                                Content="Kép feltöltése"
-                                                Style="{StaticResource PrimaryButton}"
-                                                Padding="12,7"
-                                                Click="UploadMenuImageButton_Click"
-                                                IsEnabled="False"/>
-                                    </Grid>
-
-                                    <TextBox x:Name="MenuImageUrlTextBox"
-                                             Style="{StaticResource InputTextBox}"
-                                             IsReadOnly="True"
-                                             Margin="0,0,0,12"/>
-
-                                    <DataGrid x:Name="MenuItemsGrid"
-                                              AutoGenerateColumns="False"
-                                              IsReadOnly="True"
-                                              HeadersVisibility="Column"
-                                              Style="{StaticResource AdminDataGrid}"
-                                              SelectionMode="Single"
-                                              SelectionUnit="FullRow"
-                                              SelectionChanged="MenuItemsGrid_SelectionChanged"
-                                              MinHeight="300"
+                                    <Expander x:Name="MenuEditorExpander"
+                                              Header="Tétel hozzáadása / szerkesztése"
+                                              IsExpanded="False"
                                               Margin="0,0,0,8">
-                                        <DataGrid.Columns>
-                                            <DataGridTextColumn Header="Név" Binding="{Binding name}" Width="2*"/>
-                                            <DataGridTextColumn Header="Kategória" Binding="{Binding category}" Width="*"/>
-                                            <DataGridTextColumn Header="Ár" Binding="{Binding price}" Width="*"/>
-                                            <DataGridCheckBoxColumn Header="Elérhető" Binding="{Binding isAvailable}" Width="*"/>
-                                        </DataGrid.Columns>
-                                    </DataGrid>
+                                        <Border Background="{StaticResource CardBackground}" CornerRadius="10" Padding="16" Margin="0,8,0,0">
+                                        <StackPanel>
+                                            <Grid Margin="0,0,0,10">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="*"/>
+                                                </Grid.ColumnDefinitions>
 
-                                    <TextBlock x:Name="MenuStatusText" Foreground="Red" FontSize="12" Visibility="Collapsed"/>
+                                                <StackPanel Margin="0,0,8,0">
+                                                    <TextBlock Text="Név" Margin="0,0,0,6"/>
+                                                    <TextBox x:Name="MenuNameTextBox" Style="{StaticResource InputTextBox}"/>
+                                                </StackPanel>
+
+                                                <StackPanel Grid.Column="1" Margin="8,0,0,0">
+                                                    <TextBlock Text="Kategória" Margin="0,0,0,6"/>
+                                                    <TextBox x:Name="MenuCategoryTextBox" Style="{StaticResource InputTextBox}"/>
+                                                </StackPanel>
+                                            </Grid>
+
+                                            <Grid Margin="0,0,0,10">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="220"/>
+                                                </Grid.ColumnDefinitions>
+
+                                                <StackPanel Margin="0,0,8,0">
+                                                    <TextBlock Text="Leírás" Margin="0,0,0,6"/>
+                                                    <TextBox x:Name="MenuDescriptionTextBox" Style="{StaticResource InputTextBox}"/>
+                                                </StackPanel>
+
+                                                <StackPanel Grid.Column="1" Margin="8,0,0,0">
+                                                    <TextBlock Text="Ár" Margin="0,0,0,6"/>
+                                                    <TextBox x:Name="MenuPriceTextBox" Style="{StaticResource InputTextBox}"/>
+                                                </StackPanel>
+                                            </Grid>
+
+                                            <CheckBox x:Name="MenuIsAvailableCheckBox" Content="Elérhető" IsChecked="True" Margin="0,0,0,12"/>
+
+                                            <Grid Margin="0,0,0,8">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="Auto"/>
+                                                    <ColumnDefinition Width="Auto"/>
+                                                </Grid.ColumnDefinitions>
+
+                                                <TextBox x:Name="MenuSelectedImagePathTextBox"
+                                                         Style="{StaticResource InputTextBox}"
+                                                         IsReadOnly="True"
+                                                         VerticalAlignment="Center"/>
+
+                                                <Button Grid.Column="1"
+                                                        Content="Tallózás"
+                                                        Style="{StaticResource PrimaryButton}"
+                                                        Padding="12,7"
+                                                        Margin="8,0,8,0"
+                                                        Click="BrowseMenuImageButton_Click"/>
+
+                                                <Button Grid.Column="2"
+                                                        x:Name="UploadMenuImageButton"
+                                                        Content="Kép feltöltése"
+                                                        Style="{StaticResource PrimaryButton}"
+                                                        Padding="12,7"
+                                                        Click="UploadMenuImageButton_Click"
+                                                        IsEnabled="False"/>
+                                            </Grid>
+
+                                            <TextBox x:Name="MenuImageUrlTextBox"
+                                                     Style="{StaticResource InputTextBox}"
+                                                     IsReadOnly="True"
+                                                     Margin="0,0,0,12"/>
+
+                                            <WrapPanel>
+                                                <Button Content="Új" Style="{StaticResource PrimaryButton}" Padding="12,7" Margin="0,0,8,0" Click="NewMenuItemButton_Click"/>
+                                                <Button x:Name="AddMenuItemButton" Content="Hozzáadás" Style="{StaticResource PrimaryButton}" Padding="12,7" Margin="0,0,8,0" Click="AddMenuItemButton_Click"/>
+                                                <Button x:Name="UpdateMenuItemButton" Content="Módosítás" Style="{StaticResource PrimaryButton}" Padding="12,7" Margin="0,0,8,0" Click="UpdateMenuItemButton_Click" IsEnabled="False"/>
+                                                <Button x:Name="DeleteMenuItemButton" Content="Törlés" Style="{StaticResource PrimaryButton}" Padding="12,7" Click="DeleteMenuItemButton_Click" IsEnabled="False"/>
+                                            </WrapPanel>
+                                        </StackPanel>
+                                        </Border>
+                                    </Expander>
+
+                                    <Border Background="{StaticResource CardBackground}" CornerRadius="10" Padding="16" Margin="0,0,0,12">
+                                        <StackPanel>
+                                            <Grid Margin="0,0,0,10">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="Auto"/>
+                                                </Grid.ColumnDefinitions>
+
+                                                <TextBlock Text="Étlap tételek" FontSize="16" FontWeight="SemiBold" Foreground="{StaticResource TextColor}" VerticalAlignment="Center"/>
+                                                <Button Grid.Column="1" Content="Frissítés" Style="{StaticResource PrimaryButton}" Padding="12,7" Click="RefreshMenuButton_Click"/>
+                                            </Grid>
+
+                                            <DataGrid x:Name="MenuItemsGrid"
+                                                      AutoGenerateColumns="False"
+                                                      IsReadOnly="True"
+                                                      HeadersVisibility="Column"
+                                                      Style="{StaticResource AdminDataGrid}"
+                                                      SelectionMode="Single"
+                                                      SelectionUnit="FullRow"
+                                                      SelectionChanged="MenuItemsGrid_SelectionChanged"
+                                                      MinHeight="300"
+                                                      Margin="0,0,0,8">
+                                                <DataGrid.Columns>
+                                                    <DataGridTextColumn Header="Név" Binding="{Binding name}" Width="2*"/>
+                                                    <DataGridTextColumn Header="Kategória" Binding="{Binding category}" Width="*"/>
+                                                    <DataGridTextColumn Header="Ár" Binding="{Binding price}" Width="*"/>
+                                                    <DataGridCheckBoxColumn Header="Elérhető" Binding="{Binding isAvailable}" Width="*"/>
+                                                </DataGrid.Columns>
+                                            </DataGrid>
+
+                                            <TextBlock x:Name="MenuStatusText" Foreground="Red" FontSize="12" Visibility="Collapsed"/>
+                                        </StackPanel>
+                                    </Border>
                                 </StackPanel>
                             </TabItem>
                         </TabControl>
