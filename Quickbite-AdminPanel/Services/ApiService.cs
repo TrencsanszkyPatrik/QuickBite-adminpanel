@@ -1,5 +1,6 @@
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.IO;
 using System.Text;
 using Newtonsoft.Json;
 using Quickbite_AdminPanel.Models;
@@ -38,7 +39,6 @@ namespace Quickbite_AdminPanel.Services
             };
         }
 
-        // === AUTH ===
         public async Task<AdminLoginResponse?> LoginAsync(string email, string password)
         {
             try
@@ -70,7 +70,6 @@ namespace Quickbite_AdminPanel.Services
             }
         }
 
-        // === DASHBOARD ===
         public async Task<DashboardStats?> GetDashboardStatsAsync()
         {
             try
@@ -91,7 +90,6 @@ namespace Quickbite_AdminPanel.Services
             }
         }
 
-        // === ADMIN MANAGEMENT ===
         public async Task<List<AdminListItem>?> GetAdminsAsync()
         {
             try
@@ -148,12 +146,10 @@ namespace Quickbite_AdminPanel.Services
             }
         }
 
-        // === RESTAURANTS ===
         public async Task<List<RestaurantListItem>?> GetRestaurantsAsync()
         {
             try
             {
-                // Use super-admin endpoint to get restaurants with admin names
                 var response = await _httpClient.GetAsync("api/super-admin/restaurants-with-admins");
                 
                 if (response.IsSuccessStatusCode)
@@ -235,7 +231,6 @@ namespace Quickbite_AdminPanel.Services
             }
         }
 
-        // === RESTAURANT ADMIN ===
         public async Task<List<RestaurantAdminRestaurantItem>?> GetMyRestaurantsAsync()
         {
             try
@@ -277,7 +272,7 @@ namespace Quickbite_AdminPanel.Services
         {
             try
             {
-                var response = await _httpClient.GetAsync($"api/MenuItems/restaurant/{restaurantId}");
+                var response = await _httpClient.GetAsync($"api/restaurant-admin/restaurants/{restaurantId}/menu-items");
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -293,7 +288,103 @@ namespace Quickbite_AdminPanel.Services
             }
         }
 
-        // === USER MANAGEMENT ===
+        public async Task<RestaurantAdminMenuItem?> CreateMenuItemAsync(RestaurantAdminCreateMenuItemRequest request)
+        {
+            try
+            {
+                var json = JsonConvert.SerializeObject(request);
+                var content = new StringContent(json, Encoding.UTF8, "application/json");
+                var response = await _httpClient.PostAsync("api/restaurant-admin/menu-items", content);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    var responseJson = await response.Content.ReadAsStringAsync();
+                    return JsonConvert.DeserializeObject<RestaurantAdminMenuItem>(responseJson);
+                }
+
+                return null;
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        public async Task<RestaurantAdminMenuItem?> UpdateMenuItemAsync(int menuItemId, RestaurantAdminUpdateMenuItemRequest request)
+        {
+            try
+            {
+                var json = JsonConvert.SerializeObject(request);
+                var content = new StringContent(json, Encoding.UTF8, "application/json");
+                var response = await _httpClient.PutAsync($"api/restaurant-admin/menu-items/{menuItemId}", content);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    var responseJson = await response.Content.ReadAsStringAsync();
+                    return JsonConvert.DeserializeObject<RestaurantAdminMenuItem>(responseJson);
+                }
+
+                return null;
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        public async Task<bool> DeleteMenuItemAsync(int menuItemId)
+        {
+            try
+            {
+                var response = await _httpClient.DeleteAsync($"api/restaurant-admin/menu-items/{menuItemId}");
+                return response.IsSuccessStatusCode;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        public async Task<RestaurantAdminMenuItem?> UploadMenuItemImageAsync(int menuItemId, string imagePath)
+        {
+            try
+            {
+                using var formData = new MultipartFormDataContent();
+                using var fileStream = File.OpenRead(imagePath);
+                using var fileContent = new StreamContent(fileStream);
+                fileContent.Headers.ContentType = new MediaTypeHeaderValue(GetMediaType(imagePath));
+                formData.Add(fileContent, "image", Path.GetFileName(imagePath));
+
+                var response = await _httpClient.PostAsync($"api/restaurant-admin/menu-items/{menuItemId}/upload-image", formData);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    var responseJson = await response.Content.ReadAsStringAsync();
+                    return JsonConvert.DeserializeObject<RestaurantAdminMenuItem>(responseJson);
+                }
+
+                var errorContent = await response.Content.ReadAsStringAsync();
+                throw new Exception($"Képfeltöltési API hiba ({(int)response.StatusCode}): {errorContent}");
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Képfeltöltés sikertelen: {ex.Message}");
+            }
+        }
+
+        private static string GetMediaType(string filePath)
+        {
+            return Path.GetExtension(filePath).ToLowerInvariant() switch
+            {
+                ".jpg" => "image/jpeg",
+                ".jpeg" => "image/jpeg",
+                ".png" => "image/png",
+                ".gif" => "image/gif",
+                ".webp" => "image/webp",
+                _ => "application/octet-stream"
+            };
+        }
+
         public async Task<List<UserListItem>?> GetUsersAsync()
         {
             try
