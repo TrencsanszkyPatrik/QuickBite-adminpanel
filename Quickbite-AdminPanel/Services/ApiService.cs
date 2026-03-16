@@ -273,6 +273,26 @@ namespace Quickbite_AdminPanel.Services
             }
         }
 
+        public async Task<List<RestaurantAdminMenuItem>?> GetRestaurantMenuItemsAsync(int restaurantId)
+        {
+            try
+            {
+                var response = await _httpClient.GetAsync($"api/MenuItems/restaurant/{restaurantId}");
+
+                if (response.IsSuccessStatusCode)
+                {
+                    var json = await response.Content.ReadAsStringAsync();
+                    return JsonConvert.DeserializeObject<List<RestaurantAdminMenuItem>>(json);
+                }
+
+                return null;
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
         // === USER MANAGEMENT ===
         public async Task<List<UserListItem>?> GetUsersAsync()
         {

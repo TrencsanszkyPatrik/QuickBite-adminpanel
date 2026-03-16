@@ -97,68 +97,98 @@
                         <TextBlock Text="Választott étterem" FontWeight="SemiBold" Margin="0,0,0,6"/>
                         <ComboBox x:Name="RestaurantSelector" DisplayMemberPath="name" SelectedValuePath="id" SelectionChanged="RestaurantSelector_SelectionChanged" Margin="0,0,0,20" MinHeight="34"/>
 
-                        <Grid Margin="0,0,0,10">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="*"/>
-                            </Grid.ColumnDefinitions>
+                        <TabControl Margin="0,4,0,0">
+                            <TabItem Header="Étterem adatai">
+                                <StackPanel Margin="12">
+                                    <Grid Margin="0,0,0,10">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
 
-                            <StackPanel Margin="0,0,8,0">
-                                <TextBlock Text="Név" Margin="0,0,0,6"/>
-                                <TextBox x:Name="NameTextBox" Style="{StaticResource InputTextBox}"/>
-                            </StackPanel>
+                                        <StackPanel Margin="0,0,8,0">
+                                            <TextBlock Text="Név" Margin="0,0,0,6"/>
+                                            <TextBox x:Name="NameTextBox" Style="{StaticResource InputTextBox}"/>
+                                        </StackPanel>
 
-                            <StackPanel Grid.Column="1" Margin="8,0,0,0">
-                                <TextBlock Text="Város" Margin="0,0,0,6"/>
-                                <TextBox x:Name="CityTextBox" Style="{StaticResource InputTextBox}"/>
-                            </StackPanel>
-                        </Grid>
+                                        <StackPanel Grid.Column="1" Margin="8,0,0,0">
+                                            <TextBlock Text="Város" Margin="0,0,0,6"/>
+                                            <TextBox x:Name="CityTextBox" Style="{StaticResource InputTextBox}"/>
+                                        </StackPanel>
+                                    </Grid>
 
-                        <TextBlock Text="Cím" Margin="0,0,0,6"/>
-                        <TextBox x:Name="AddressTextBox" Style="{StaticResource InputTextBox}" Margin="0,0,0,10"/>
+                                    <TextBlock Text="Cím" Margin="0,0,0,6"/>
+                                    <TextBox x:Name="AddressTextBox" Style="{StaticResource InputTextBox}" Margin="0,0,0,10"/>
 
-                        <TextBlock Text="Telefonszám" Margin="0,0,0,6"/>
-                        <TextBox x:Name="PhoneTextBox" Style="{StaticResource InputTextBox}" Margin="0,0,0,10"/>
+                                    <TextBlock Text="Telefonszám" Margin="0,0,0,6"/>
+                                    <TextBox x:Name="PhoneTextBox" Style="{StaticResource InputTextBox}" Margin="0,0,0,10"/>
 
-                        <Grid Margin="0,0,0,10">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="*"/>
-                            </Grid.ColumnDefinitions>
+                                    <Grid Margin="0,0,0,10">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
 
-                            <StackPanel Margin="0,0,8,0">
-                                <TextBlock Text="Nyitás (HH:mm)" Margin="0,0,0,6"/>
-                                <TextBox x:Name="OpeningTimeTextBox" Style="{StaticResource InputTextBox}"/>
-                            </StackPanel>
+                                        <StackPanel Margin="0,0,8,0">
+                                            <TextBlock Text="Nyitás (HH:mm)" Margin="0,0,0,6"/>
+                                            <TextBox x:Name="OpeningTimeTextBox" Style="{StaticResource InputTextBox}"/>
+                                        </StackPanel>
 
-                            <StackPanel Grid.Column="1" Margin="8,0,8,0">
-                                <TextBlock Text="Zárás (HH:mm)" Margin="0,0,0,6"/>
-                                <TextBox x:Name="ClosingTimeTextBox" Style="{StaticResource InputTextBox}"/>
-                            </StackPanel>
+                                        <StackPanel Grid.Column="1" Margin="8,0,8,0">
+                                            <TextBlock Text="Zárás (HH:mm)" Margin="0,0,0,6"/>
+                                            <TextBox x:Name="ClosingTimeTextBox" Style="{StaticResource InputTextBox}"/>
+                                        </StackPanel>
 
-                            <StackPanel Grid.Column="2" Margin="8,0,0,0">
-                                <TextBlock Text="Kedvezmény (%)" Margin="0,0,0,6"/>
-                                <TextBox x:Name="DiscountTextBox" Style="{StaticResource InputTextBox}"/>
-                            </StackPanel>
-                        </Grid>
+                                        <StackPanel Grid.Column="2" Margin="8,0,0,0">
+                                            <TextBlock Text="Kedvezmény (%)" Margin="0,0,0,6"/>
+                                            <TextBox x:Name="DiscountTextBox" Style="{StaticResource InputTextBox}"/>
+                                        </StackPanel>
+                                    </Grid>
 
-                        <WrapPanel Margin="0,0,0,10">
-                            <CheckBox x:Name="FreeDeliveryCheckBox" Content="Ingyenes szállítás" Margin="0,0,25,0"/>
-                            <CheckBox x:Name="AcceptCardsCheckBox" Content="Kártyaelfogadás"/>
-                        </WrapPanel>
+                                    <WrapPanel Margin="0,0,0,10">
+                                        <CheckBox x:Name="FreeDeliveryCheckBox" Content="Ingyenes szállítás" Margin="0,0,25,0"/>
+                                        <CheckBox x:Name="AcceptCardsCheckBox" Content="Kártyaelfogadás"/>
+                                    </WrapPanel>
 
-                        <TextBlock Text="Rövid leírás" Margin="0,0,0,6"/>
-                        <TextBox x:Name="DescriptionTextBox" Style="{StaticResource InputTextBox}" TextWrapping="Wrap" AcceptsReturn="True" Height="70" Margin="0,0,0,10"/>
+                                    <TextBlock Text="Rövid leírás" Margin="0,0,0,6"/>
+                                    <TextBox x:Name="DescriptionTextBox" Style="{StaticResource InputTextBox}" TextWrapping="Wrap" AcceptsReturn="True" Height="70" Margin="0,0,0,10"/>
 
-                        <TextBlock Text="Hosszú leírás" Margin="0,0,0,6"/>
-                        <TextBox x:Name="DescriptionLongTextBox" Style="{StaticResource InputTextBox}" TextWrapping="Wrap" AcceptsReturn="True" Height="120" Margin="0,0,0,16"/>
+                                    <TextBlock Text="Hosszú leírás" Margin="0,0,0,6"/>
+                                    <TextBox x:Name="DescriptionLongTextBox" Style="{StaticResource InputTextBox}" TextWrapping="Wrap" AcceptsReturn="True" Height="120" Margin="0,0,0,16"/>
 
-                        <TextBlock x:Name="StatusText" Foreground="Red" FontSize="12" Margin="0,0,0,8" Visibility="Collapsed"/>
+                                    <TextBlock x:Name="StatusText" Foreground="Red" FontSize="12" Margin="0,0,0,8" Visibility="Collapsed"/>
 
-                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                            <Button x:Name="SaveButton" Content="Mentés" Style="{StaticResource PrimaryButton}" Click="SaveButton_Click"/>
-                        </StackPanel>
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                        <Button x:Name="SaveButton" Content="Mentés" Style="{StaticResource PrimaryButton}" Click="SaveButton_Click"/>
+                                    </StackPanel>
+                                </StackPanel>
+                            </TabItem>
+
+                            <TabItem Header="Étlap">
+                                <StackPanel Margin="12">
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,0,10">
+                                        <Button Content="Frissítés" Style="{StaticResource PrimaryButton}" Padding="12,7" Click="RefreshMenuButton_Click"/>
+                                    </StackPanel>
+
+                                    <DataGrid x:Name="MenuItemsGrid"
+                                              AutoGenerateColumns="False"
+                                              IsReadOnly="True"
+                                              HeadersVisibility="Column"
+                                              MinHeight="300"
+                                              Margin="0,0,0,8">
+                                        <DataGrid.Columns>
+                                            <DataGridTextColumn Header="Név" Binding="{Binding name}" Width="2*"/>
+                                            <DataGridTextColumn Header="Kategória" Binding="{Binding category}" Width="*"/>
+                                            <DataGridTextColumn Header="Ár" Binding="{Binding price}" Width="*"/>
+                                            <DataGridCheckBoxColumn Header="Elérhető" Binding="{Binding isAvailable}" Width="*"/>
+                                        </DataGrid.Columns>
+                                    </DataGrid>
+
+                                    <TextBlock x:Name="MenuStatusText" Foreground="Red" FontSize="12" Visibility="Collapsed"/>
+                                </StackPanel>
+                            </TabItem>
+                        </TabControl>
                     </StackPanel>
                 </Border>
             </StackPanel>

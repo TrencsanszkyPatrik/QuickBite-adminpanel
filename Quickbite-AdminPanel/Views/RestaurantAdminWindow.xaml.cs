@@ -10,6 +10,7 @@ namespace Quickbite_AdminPanel.Views
         private readonly AdminLoginResponse _currentUser;
         private readonly ApiService _apiService;
         private List<RestaurantAdminRestaurantItem> _restaurants = new();
+        private List<RestaurantAdminMenuItem> _menuItems = new();
 
         public RestaurantAdminWindow(AdminLoginResponse user, ApiService apiService)
         {
@@ -51,7 +52,7 @@ namespace Quickbite_AdminPanel.Views
             }
         }
 
-        private void RestaurantSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private async void RestaurantSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (RestaurantSelector.SelectedItem is not RestaurantAdminRestaurantItem selected)
                 return;
@@ -68,6 +69,50 @@ namespace Quickbite_AdminPanel.Views
             DescriptionTextBox.Text = selected.description;
             DescriptionLongTextBox.Text = selected.descriptionLong;
             StatusText.Visibility = Visibility.Collapsed;
+
+            await LoadMenuForSelectedRestaurantAsync(selected.id);
+        }
+
+        private async Task LoadMenuForSelectedRestaurantAsync(int restaurantId)
+        {
+            try
+            {
+                MenuStatusText.Visibility = Visibility.Collapsed;
+                var menuItems = await _apiService.GetRestaurantMenuItemsAsync(restaurantId);
+
+                if (menuItems == null)
+                {
+                    _menuItems = new List<RestaurantAdminMenuItem>();
+                    MenuItemsGrid.ItemsSource = _menuItems;
+                    ShowMenuStatus("Nem sikerült lekérni az étlapot.");
+                    return;
+                }
+
+                _menuItems = menuItems;
+                MenuItemsGrid.ItemsSource = _menuItems;
+
+                if (_menuItems.Count == 0)
+                {
+                    ShowMenuStatus("Ehhez az étteremhez nincs elérhető étlapelem.", false);
+                }
+            }
+            catch (Exception ex)
+            {
+                _menuItems = new List<RestaurantAdminMenuItem>();
+                MenuItemsGrid.ItemsSource = _menuItems;
+                ShowMenuStatus($"Hiba az étlap betöltésekor: {ex.Message}");
+            }
+        }
+
+        private async void RefreshMenuButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (RestaurantSelector.SelectedItem is not RestaurantAdminRestaurantItem selected)
+            {
+                ShowMenuStatus("Nincs kiválasztott étterem.");
+                return;
+            }
+
+            await LoadMenuForSelectedRestaurantAsync(selected.id);
         }
 
         private async void SaveButton_Click(object sender, RoutedEventArgs e)
@@ -153,6 +198,15 @@ namespace Quickbite_AdminPanel.Views
                 ? System.Windows.Media.Brushes.Red
                 : System.Windows.Media.Brushes.Green;
             StatusText.Visibility = Visibility.Visible;
+        }
+
+        private void ShowMenuStatus(string message, bool isError = true)
+        {
+            MenuStatusText.Text = message;
+            MenuStatusText.Foreground = isError
+                ? System.Windows.Media.Brushes.Red
+                : System.Windows.Media.Brushes.Green;
+            MenuStatusText.Visibility = Visibility.Visible;
         }
 
         private static bool IsValidTime(string value)
