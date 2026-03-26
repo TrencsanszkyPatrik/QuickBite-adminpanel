@@ -33,7 +33,7 @@ namespace Quickbite_AdminPanel.Services
         {
             _httpClient = new HttpClient()
             {
-                BaseAddress = new Uri("http://localhost:5158/"),
+                BaseAddress = new Uri("https://quickbite-backend-production-6372.up.railway.app/"),
                 Timeout = TimeSpan.FromSeconds(30)
             };
         }
