@@ -137,6 +137,48 @@ namespace Quickbite_AdminPanel.Models
         public string PhoneNumber { get; set; } = string.Empty;
     }
 
+    public class RestaurantAdminMenuItem
+    {
+        public int id { get; set; }
+
+        [JsonProperty("restaurant_id")]
+        public int restaurantId { get; set; }
+
+        public string name { get; set; } = string.Empty;
+        public string? description { get; set; }
+        public int price { get; set; }
+
+        [JsonProperty("image_url")]
+        public string? imageUrl { get; set; }
+
+        public string? category { get; set; }
+
+        [JsonProperty("is_available")]
+        public bool isAvailable { get; set; }
+
+        [JsonProperty("created_at")]
+        public DateTime createdAt { get; set; }
+    }
+
+    public class RestaurantAdminCreateMenuItemRequest
+    {
+        public int RestaurantId { get; set; }
+        public string Name { get; set; } = string.Empty;
+        public string? Description { get; set; }
+        public int Price { get; set; }
+        public string? Category { get; set; }
+        public bool IsAvailable { get; set; } = true;
+    }
+
+    public class RestaurantAdminUpdateMenuItemRequest
+    {
+        public string Name { get; set; } = string.Empty;
+        public string? Description { get; set; }
+        public int? Price { get; set; }
+        public string? Category { get; set; }
+        public bool? IsAvailable { get; set; }
+    }
+
     public class UserListItem
     {
         public int Id { get; set; }
